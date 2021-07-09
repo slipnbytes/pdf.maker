@@ -1,0 +1,86 @@
+name: CI
+
+on: [push, pull_request]
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [12.x, 14.x, 15.x, 16.x]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set Up Node ${{ matrix.node }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install Dependencies
+        uses: bahmutov/npm-install@v1
+        with:
+          useLockFile: false
+          install-command: yarn --frozen-lockfile --silent
+
+      - name: Check Prettier
+        run: yarn prettier
+
+      - name: Check Lint
+        run: yarn lint
+
+      - name: Check Tests
+        run: yarn test:all
+
+      - name: Coveralls Parallel
+        uses: coverallsapp/github-action@master
+        with:
+          parallel: true
+          flag-name: run-${{ matrix.node }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  coverage:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@master
+        with:
+          parallel-finished: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [12.x, 14.x, 15.x, 16.x]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set Up Node ${{ matrix.node }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install Dependencies
+        uses: bahmutov/npm-install@v1
+        with:
+          useLockFile: false
+          install-command: yarn --frozen-lockfile --silent
+
+      - name: Build
+        run: yarn build

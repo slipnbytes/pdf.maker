@@ -1,0 +1,3 @@
+{
+  "extends": ["@hitechline", "group:all", ":preserveSemverRanges"]
+}
