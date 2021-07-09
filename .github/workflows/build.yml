@@ -37,7 +37,7 @@ jobs:
         run: yarn lint
 
       - name: Check Tests
-        run: yarn test:all
+        run: yarn test
 
       - name: Coveralls Parallel
         uses: coverallsapp/github-action@master
