@@ -1,3 +1,10 @@
+## [1.0.0-canary.2](https://github.com/hitechline/pdf-maker/compare/v1.0.0-canary.1...v1.0.0-canary.2) (2021-07-10)
+
+
+### Bug Fixes
+
+* build out file ([d5b5841](https://github.com/hitechline/pdf-maker/commit/d5b58410f49a77d6d641b90b69f0d560e7c8ca3c))
+
 ## 1.0.0-canary.1 (2021-07-10)
 
 
