@@ -16,7 +16,7 @@ const BASE_CONFIG = {
   tsconfig: 'tsconfig.json',
   absWorkingDir: BASE_PATH,
   bundle: true,
-  // minify: true,
+  minify: true,
   sourcemap: true,
   external: ['puppeteer', 'handlebars'],
   banner: {
