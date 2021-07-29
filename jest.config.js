@@ -1,3 +1,6 @@
+/**
+ * @type {import('@jest/types/build/Config').DefaultOptions}
+ */
 module.exports = {
   bail: true,
   clearMocks: true,
@@ -13,4 +16,5 @@ module.exports = {
     '<rootDir>/src/**/*.{js,ts}',
     '!<rootDir>/src/index.ts',
   ],
+  setupFilesAfterEnv: ['<rootDir>/jest/cleanupBrowser.ts'],
 };

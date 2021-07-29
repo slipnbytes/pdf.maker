@@ -1,8 +1,9 @@
 import { toMatchImageSnapshot } from 'jest-image-snapshot';
 
-import { PDFMakerError } from '../src/PDFMakerError';
+import { BrowserManager } from '../src/browser/BrowserManager';
+import { HandlerRunnerError } from '../src/errors/HandlerRunnerError';
+import { HandlerRunner } from '../src/modules/HandlerRunner';
 import { render } from '../src/render';
-import { work } from '../src/work';
 
 jest.setTimeout(60000);
 
@@ -15,7 +16,7 @@ describe('render', () => {
     try {
       await render({ handler: 'unknwon' } as any);
     } catch (error) {
-      expect(error).toBeInstanceOf(PDFMakerError);
+      expect(error).toBeInstanceOf(HandlerRunnerError);
     }
   });
 
@@ -30,18 +31,19 @@ describe('render', () => {
     expect(data).toBeInstanceOf(Buffer);
   });
 
-  test('check pdf is render correct', async () => {
-    const { run, getBrowser } = await work({});
-    const page = await run('url', {
+  test('check if pdf is rendered correctly', async () => {
+    const browserManager = new BrowserManager();
+    const handlerRunner = new HandlerRunner(browserManager);
+
+    const pageId = await handlerRunner.run('url', {
       url: 'https://google.com',
     });
 
+    const page = browserManager.browser.getPage(pageId);
     const image = await page.screenshot();
 
-    await getBrowser().close();
-
     expect(image).toMatchImageSnapshot({
-      failureThreshold: 0.1,
+      failureThreshold: 0.2,
       failureThresholdType: 'percent',
     });
   });
