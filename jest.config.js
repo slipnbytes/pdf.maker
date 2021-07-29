@@ -6,6 +6,7 @@ module.exports = {
   clearMocks: true,
   collectCoverage: true,
   rootDir: __dirname,
+  testEnvironment: 'node',
   transform: {
     '^.+\\.ts$': 'ts-jest',
   },
@@ -16,5 +17,9 @@ module.exports = {
     '<rootDir>/src/**/*.{js,ts}',
     '!<rootDir>/src/index.ts',
   ],
-  setupFilesAfterEnv: ['<rootDir>/jest/cleanupBrowser.ts'],
+  setupFilesAfterEnv: [
+    '<rootDir>/jest/setTimeout.ts',
+    '<rootDir>/jest/expectExtend.ts',
+    '<rootDir>/jest/cleanupBrowser.ts',
+  ],
 };

@@ -1,13 +1,7 @@
-import { toMatchImageSnapshot } from 'jest-image-snapshot';
-
 import { BrowserManager } from '../src/browser/BrowserManager';
 import { HandlerRunnerError } from '../src/errors/HandlerRunnerError';
 import { HandlerRunner } from '../src/modules/HandlerRunner';
 import { render } from '../src/render';
-
-jest.setTimeout(60000);
-
-expect.extend({ toMatchImageSnapshot });
 
 describe('render', () => {
   it('should be return an error because the provider handler is invalid', async () => {
