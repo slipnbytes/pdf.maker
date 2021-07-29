@@ -1,8 +1,10 @@
 module.exports = {
   extends: ['@hitechline', '@hitechline/eslint-config/typescript'],
   rules: {
-    'no-console': 'off',
     'global-require': 'off',
+
+    'no-console': 'off',
+    'no-useless-constructor': 'off',
 
     '@typescript-eslint/ban-types': 'off',
     '@typescript-eslint/no-var-requires': 'off',
