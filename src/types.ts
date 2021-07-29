@@ -1,8 +1,14 @@
-import type { Page, Browser } from 'puppeteer';
+import type { Page as PuppeteerPage } from 'puppeteer';
 
 import type { handlers } from './handlers';
 
 export type AnyObject = Record<string, any>;
+
+//
+
+export interface Page extends PuppeteerPage {
+  readonly id: string;
+}
 
 //
 
@@ -13,18 +19,8 @@ export interface Context<Options> {
 
 //
 
-export interface WorkOptions {
+export interface WorkerOptions {
   __render?: boolean;
-}
-
-export interface WorkFactory {
-  getPage(): Page;
-  getBrowser(): Browser;
-  makePDF(): Promise<Buffer>;
-  run<HandlerName extends HandlersName>(
-    handlerName: HandlerName,
-    options: GetHandlerOptions<HandlerName>,
-  ): Promise<Page>;
 }
 
 //
@@ -49,6 +45,13 @@ export interface Handler<Name extends string, Options extends AnyObject> {
   run(context: Context<Options>): Promise<void>;
   verify?(options: Options): Promise<void>;
 }
+
+export type GetHandler<Name extends HandlersName> = Exclude<
+  HandlersType,
+  Handler<Exclude<HandlersName, Name>, any>
+> extends Handler<Name, infer Options>
+  ? Handler<Name, Options>
+  : never;
 
 export type GetHandlerOptions<Name extends HandlersName> = Exclude<
   HandlersType,
