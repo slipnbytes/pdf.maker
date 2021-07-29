@@ -1,14 +1,14 @@
-import { makeHandler } from '../makeHandler';
+import type { Handler } from '../types';
 
 export interface URLHandlerOptions {
   url: string;
 }
 
-export const urlHandler = makeHandler<'url', URLHandlerOptions>(
-  'url',
-  async ({ page, options }) => {
+export const urlHandler: Handler<'url', URLHandlerOptions> = {
+  name: 'url',
+  async run({ page, options }) {
     await page.goto(options.url, {
       waitUntil: 'networkidle0',
     });
   },
-);
+};

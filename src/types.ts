@@ -44,13 +44,10 @@ export type HandlersType = typeof handlers[number];
 
 export type HandlersName = HandlersType['name'];
 
-export interface HandlerArcade<Options> {
-  (context: Context<Options>): any;
-}
-
 export interface Handler<Name extends string, Options extends AnyObject> {
   readonly name: Name;
-  make(context: Context<Options>): Promise<Page>;
+  run(context: Context<Options>): Promise<void>;
+  verify?(options: Options): Promise<void>;
 }
 
 export type GetHandlerOptions<Name extends HandlersName> = Exclude<

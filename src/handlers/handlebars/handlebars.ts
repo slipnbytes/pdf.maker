@@ -1,7 +1,7 @@
 import type { compile } from 'handlebars';
 
-import { makeHandler } from '../../makeHandler';
 import { PDFMakerError } from '../../PDFMakerError';
+import type { Handler } from '../../types';
 import { checkFile } from '../../utils/checkFile';
 import { getFileContent } from '../../utils/getFileContent';
 import { getModule } from './getModule';
@@ -14,18 +14,21 @@ export interface HandlebarsHandlerOptions {
 
 const HANDLEBARS_EXTENSION_REGEX = /\.hbs$/;
 
-export const handlebarsHandler = makeHandler<
+export const handlebarsHandler: Handler<
   'handlebars',
   HandlebarsHandlerOptions
->(
-  'handlebars',
-  async ({ page, options: { path, context = {}, compileOptions = {} } }) => {
+> = {
+  name: 'handlebars',
+  async verify({ path }) {
+    getModule();
+
     if (!path) {
       throw new PDFMakerError('Input Error', 'No "path" was provided.');
     }
 
     await checkFile(path, HANDLEBARS_EXTENSION_REGEX);
-
+  },
+  async run({ page, options: { path, context = {}, compileOptions = {} } }) {
     const handlebars = getModule();
 
     const content = await getFileContent(path);
@@ -34,4 +37,4 @@ export const handlebarsHandler = makeHandler<
 
     await page.setContent(view);
   },
-);
+};
