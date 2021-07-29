@@ -1,6 +1,6 @@
 import type { compile } from 'handlebars';
 
-import { PDFMakerError } from '../../PDFMakerError';
+import { HandlerOptionsError } from '../../errors/HandlerOptionsError';
 import type { Handler } from '../../types';
 import { checkFile } from '../../utils/checkFile';
 import { getFileContent } from '../../utils/getFileContent';
@@ -23,7 +23,7 @@ export const handlebarsHandler: Handler<
     getModule();
 
     if (!path) {
-      throw new PDFMakerError('Input Error', 'No "path" was provided.');
+      throw new HandlerOptionsError('No "path" was provided.');
     }
 
     await checkFile(path, HANDLEBARS_EXTENSION_REGEX);

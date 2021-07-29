@@ -1,13 +1,12 @@
 import type handlebars from 'handlebars';
 
-import { PDFMakerError } from '../../PDFMakerError';
+import { HandlerError } from '../../errors/HandlerError';
 
 export function getModule(): typeof handlebars {
   try {
     return require('handlebars');
   } catch {
-    throw new PDFMakerError(
-      'No installed package',
+    throw new HandlerError(
       'The package "handlebars" need be installed to use this handler.',
     );
   }

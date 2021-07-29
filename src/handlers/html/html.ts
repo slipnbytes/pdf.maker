@@ -1,4 +1,4 @@
-import { PDFMakerError } from '../../PDFMakerError';
+import { HandlerOptionsError } from '../../errors/HandlerOptionsError';
 import type { Handler } from '../../types';
 import { checkFile } from '../../utils/checkFile';
 import { getFileContent } from '../../utils/getFileContent';
@@ -14,10 +14,7 @@ export const htmlHandler: Handler<'html', HTMLHandlerOptions> = {
   name: 'html',
   async verify({ path, content }) {
     if (!path && !content) {
-      throw new PDFMakerError(
-        'Input Error',
-        'No "path" or "content" was provided.',
-      );
+      throw new HandlerOptionsError('No "path" or "content" was provided.');
     }
 
     if (path) {
