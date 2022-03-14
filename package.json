@@ -76,7 +76,7 @@
     "@typescript-eslint/eslint-plugin": "4.31.0",
     "@typescript-eslint/parser": "4.31.0",
     "conventional-changelog-angular": "5.0.13",
-    "conventional-changelog-conventionalcommits": "4.6.1",
+    "conventional-changelog-conventionalcommits": "4.6.3",
     "esbuild": "0.12.26",
     "eslint": "7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
