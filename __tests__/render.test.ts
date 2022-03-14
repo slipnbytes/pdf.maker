@@ -18,7 +18,7 @@ describe('render', () => {
     const data = await render({
       handler: 'url',
       options: {
-        url: 'https://google.com',
+        url: 'https://i.imgur.com/Rvs3uLI.png',
       },
     });
 
