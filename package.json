@@ -61,7 +61,7 @@
     "puppeteer": "^10.1.0"
   },
   "devDependencies": {
-    "@hitechline/eslint-config": "2.0.2",
+    "@hitechline/eslint-config": "2.0.5",
     "@hitechline/semantic-release-config": "1.2.0",
     "@jest/globals": "^27.0.6",
     "@semantic-release/changelog": "5.0.1",
